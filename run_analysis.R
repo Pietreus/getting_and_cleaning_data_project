@@ -7,7 +7,10 @@
 #       for each activity and each subject.
 
 #Note: "UCI HAR Dataset" has to be in working dir
+library(dplyr)
 
+
+#TODO filepath variables are useless, combine statements
 trainPath <- file.path("UCI HAR Dataset","train","X_train.txt")
 trainAct <- file.path("UCI HAR Dataset","train","y_train.txt")
 trainSub <- file.path("UCI HAR Dataset","train","subject_train.txt")
@@ -24,19 +27,26 @@ testdata <- read.table(testPath)
 features <- read.table(featurePath)[,2]
 
 fulldata <- rbind(traindata,testdata)
+activities <- rbind(read.table(trainAct),read.table(testAct))
+activitylabels <- read.table(file.path("UCI HAR Dataset","activity_labels.txt"))
+actLabeled <- merge(activities,activitylabels)[,2]
+subjects <- rbind(read.table(trainSub),read.table(testSub))
 names(fulldata) <- features
 
 #extracting only mean() and std() variables
 
 impNames <- grep("-mean\\(\\)|-std\\(\\)",features)
 
-fulldata <- fulldata[,impNames]
-
-names(fulldata)
+dataTbl <- tbl_df(fulldata[,impNames])
+#Table required in Step 4 of the assignment
+fullTbl <- mutate(dataTbl, Activity = actLabeled)
 
 
 #TODO
-#rbind subjects and activities then cbind them to the dataset
-#replace the activity numbers with the names
-
+#Variable names may be too ambiguous -- fix with regex
 # create the transformed dataset with the mean for each sub/act/var
+#for loops for subjects and activities -> calc mean for each variable
+
+transformedTbl <- mutate(dataTbl, subjectID = subjects)
+
+
