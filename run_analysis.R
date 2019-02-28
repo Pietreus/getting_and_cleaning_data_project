@@ -44,9 +44,13 @@ fullTbl <- mutate(dataTbl, Activity = actLabeled)
 
 #TODO
 #Variable names may be too ambiguous -- fix with regex
-# create the transformed dataset with the mean for each sub/act/var
+#create the transformed dataset with the mean for each sub/act/var
 #for loops for subjects and activities -> calc mean for each variable
+#better: group and take mean per group
 
-transformedTbl <- mutate(dataTbl, subjectID = subjects)
+transformedTbl <- fullTbl %>% mutate( subjectID = subjects[,1]) %>%
+                              group_by(subjectID, Activity) %>%
+                              summarise_all(list(mean)) %>%
+                              ungroup()
 
 
