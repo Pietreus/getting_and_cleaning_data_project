@@ -8,6 +8,7 @@
 
 #Note: "UCI HAR Dataset" has to be in working dir
 require(dplyr)
+
 #reading data from various files
 traindata <- read.table(file.path("UCI HAR Dataset","train","X_train.txt"))
 trainAct <- read.table(file.path("UCI HAR Dataset","train","y_train.txt"))
@@ -17,11 +18,12 @@ testdata <- read.table(file.path("UCI HAR Dataset","test","X_test.txt"))
 testAct <- read.table(file.path("UCI HAR Dataset","test","y_test.txt"))
 testSub <- read.table(file.path("UCI HAR Dataset","test","subject_test.txt"))
 
-
 fulldata <- rbind(traindata,testdata)
 activities <- rbind(trainAct, testAct)
 activitylabels <- read.table(file.path("UCI HAR Dataset","activity_labels.txt"))
-actLabeled <- merge(activities, activitylabels)[,2]
+
+#joining activities and labels without messing with the row-order of activities
+actLabeled <- left_join(activities, activitylabels)[,2]
 subjects <- rbind(trainSub, testSub)
 #reading the original variable names
 names(fulldata) <- read.table(file.path("UCI HAR Dataset","features.txt"))[,2]
