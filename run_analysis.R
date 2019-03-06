@@ -23,7 +23,7 @@ activities <- rbind(trainAct, testAct)
 activitylabels <- read.table(file.path("UCI HAR Dataset","activity_labels.txt"))
 
 #joining activities and labels without messing with the row-order of activities
-actLabeled <- left_join(activities, activitylabels)[,2]
+actLabeled <- left_join(activities, activitylabels, by = "V1")[,2]
 subjects <- rbind(trainSub, testSub)
 #reading the original variable names
 names(fulldata) <- read.table(file.path("UCI HAR Dataset","features.txt"))[,2]
@@ -32,7 +32,8 @@ names(fulldata) <- read.table(file.path("UCI HAR Dataset","features.txt"))[,2]
 
 impNames <- grep("-mean\\(\\)|-std\\(\\)", names(fulldata))
 dataTbl <- tbl_df(fulldata[,impNames])
-names(dataTbl) <- tolower(gsub("\\(\\)","",names(dataTbl)))
+#manipulating the names 
+names(dataTbl) <- tolower(gsub("\\(\\)|-","",names(dataTbl)))
 
 #the Table required in Step 4 of the assignment
 fullTbl <- mutate(dataTbl, Activity = actLabeled)
@@ -41,7 +42,6 @@ fullTbl <- mutate(dataTbl, Activity = actLabeled)
 #adding the subject column, grouping by subject/activity
 #and take the mean for each column per group
 #the tidy dataset, as requested in the assignment
-#i love dplyr
 transformedTbl <- fullTbl %>% mutate( subjectID = subjects[,1]) %>%
                               group_by(subjectID, Activity) %>%
                               summarise_all(list(mean)) %>%

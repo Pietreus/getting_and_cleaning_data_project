@@ -8,8 +8,9 @@ The repository includes following files:
 * 'CodeBook.md': Shows information about the variables in the dataset created by run_analysis.R
 
 Notes:
-* The R script requires the dplyr package for the analysis
-* The dataset folder needs to be in the working directory for the script to function.
+* The R script requires the dplyr package for the analysis.
+* The dataset folder needs to be in the working directory for the script to work.
 * When the script is sourced in R, the 'transformedTbl' variable contains the tidy dataset,  
 	the unrefined data can be found in the 'fullTbl' variable.
+* The dataset was exported with write.table() using row.name=FALSE 
 
