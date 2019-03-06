@@ -51,6 +51,6 @@ the following objects contain unchanged data of one/multiple files of the datase
 Column| Name|			Datatype|	Range|									Desciption  
 ---|---|---|---|---
 1|	subjectid|		*int*|		[1,30]|									the identifier for each subject  
-2|	activity|		*fct*|		LAYING,SITTING,STANDING,WALKING,WALKING_DOWNSTAIRS,WALKING_UPSTAIRS|	the label of the performed activity  
+2|	activity|		*fct*|		LAYING,<br>SITTING,<br>STANDING,<br>WALKING,<br>WALKING_DOWNSTAIRS,<br>WALKING_UPSTAIRS|	the label of the performed activity  
 3-68|	*eg:* fbodyaccstdz|	*dbl*|		[-1,1]|									the means of the original records for each subject/activity combination<br>names starting with "t" are time domain and "f" are frequency domain variables<br>x,y,z at the end of the name describes the gyrocopic axis<br>mean,std define if the variable contains the mean or standard deviation of the measurement<br>additional parts like acc/gyro explain the nature of the measurement itself<br>
 														
