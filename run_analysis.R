@@ -46,5 +46,7 @@ transformedTbl <- fullTbl %>% mutate( subjectID = subjects[,1]) %>%
                               group_by(subjectID, Activity) %>%
                               summarise_all(list(mean)) %>%
                               ungroup()
+#write the txt file
+write.table(transformedTbl,"tidydata.txt",row.names = FALSE)
 
 
